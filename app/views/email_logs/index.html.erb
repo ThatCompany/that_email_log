@@ -1,0 +1,64 @@
+<h2><%= l(:label_email_logs) %></h2>
+
+<%= form_tag({}, :method => :get) do %>
+  <fieldset>
+    <legend><%= l(:label_filter_plural) %></legend>
+    <label for="from"><%= l(:label_date) %>:</label>
+    <%= date_field_tag(:from, params[:from], :size => 10) %><%= calendar_for('from') %>
+    <label for="to">-</label>
+    <%= date_field_tag(:to, params[:to], :size => 10) %><%= calendar_for('to') %>
+    <label for="q"><%= l(:label_search) %>:</label>
+    <%= text_field_tag(:q, params[:q], :size => 40, :placeholder => l(:label_email_logs_search_placeholder)) %>
+    <%= submit_tag(l(:button_apply), :class => 'small', :name => nil) %>
+    <%= link_to(l(:button_clear), email_logs_path, :class => 'icon icon-reload') %>
+  </fieldset>
+<% end %>
+
+<div class="autoscroll">
+<table class="list email-logs odd-even">
+  <thead>
+    <tr>
+      <th><%= l(:field_subject) %></th>
+      <th><%= l(:label_recipients) %></th>
+      <th><%= l(:label_date) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @maillogs.each do |maillog| %>
+      <tr class="<%= cycle("odd", "even") %> collapsible collapsed">
+        <td class="subject">
+          <%= content_tag('span', maillog.attachments,
+                          :title => l(:label_x_attachments, :count => maillog.attachments), :class => 'icon icon-attachment') if maillog.attachments > 0 %>
+          <%= link_to_function('', "$(this).closest('tr').toggleClass('collapsed'); $(this).closest('tr').next().toggle();",
+                               :title => l(:label_show_details), :class => 'icon-only email-details') %>
+          <%= render_subject(maillog) %>
+        </td>
+        <td class="recipients"><p><%= render_email_addresses(maillog.recipients) %></p></td>
+        <td class="date"><%= format_time(maillog.date) %></td>
+      </tr>
+      <tr class="<%= current_cycle %>" style="display: none;">
+        <td colspan="3" class="details">
+          <div class="field-group splitcontentleft">
+            <% maillog.addresses_by_fields.each do |field, addresses| %>
+              <div class="field"><strong><%= l("label_field_#{field.downcase}") %>:</strong> <%= render_email_addresses(addresses, true) %></div>
+            <% end %>
+          </div>
+          <div class="field-group splitcontentright">
+            <% if maillog.project %>
+              <div class="field"><strong><%= l(:label_project) %>:</strong> <%= link_to_project(maillog.project) %></div>
+            <% end %>
+            <% if maillog.notifiable_type.present? %>
+              <div class="field"><strong><%= l(:label_field_notifiable) %>:</strong> <%= render_notifiable(maillog) %></div>
+            <% end %>
+            <div class="field"><strong><%= l(:label_field_message_id) %>:</strong> <%= maillog.message_id %></div>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<span class="pagination"><%= pagination_links_full(@maillog_pages, @maillog_count) %></span>
+
+<% html_title(l(:label_email_logs)) -%>

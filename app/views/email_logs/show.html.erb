@@ -1,0 +1,10 @@
+<div id="<%= @notifiable.class.name.demodulize.underscore %>-<%= @notifiable.id %>-email-log" class="splitcontent email-log">
+  <div class="splitcontentleft">
+    <div><strong><%= l(:label_sent_to) %>:</strong> <%= @recipients.collect{ |recipient| link_to_user(recipient) }.join(', ').html_safe %></div>
+    <div><strong><%= l(:field_subject) %>:</strong> <%= h(@maillogs.first.subject) %></div>
+  </div>
+  <div class="splitcontentright">
+    <div><strong><%= l(:label_sent_at) %>:</strong> <%= format_time(@maillogs.first.date) %></div>
+    <div><strong><%= l(:label_field_message_id) %>:</strong> <%= render_maillog_links(@maillogs) %></div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<p>
+  <%= label_tag('settings[contextual_email_logs]', l(:label_contextual_email_logs)) %>
+  <label class="block">
+    <%= check_box_tag('settings[contextual_email_logs]', '1', @settings['contextual_email_logs']) %>
+    <%= l(:text_contextual_email_logs) %>
+  </label>
+</p>

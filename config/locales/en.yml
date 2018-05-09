@@ -1,0 +1,19 @@
+en:
+  label_email_logs: Email logs
+  label_email_log: Email log
+  label_recipients: Recipients
+  label_field_from: From
+  label_field_to: To
+  label_field_cc: CC
+  label_field_bcc: BCC
+  label_field_notifiable: Object
+  label_field_message_id: Message ID
+  label_show_details: Show details
+  label_email_logs_search_placeholder: Subject, Message ID or email address
+  label_contextual_email_logs: Contextual email logs
+  label_sent_to: Sent to
+  label_sent_at: Sent at
+  label_x_attachments:
+    one: 1 attachment
+    other: "%{count} attachments"
+  text_contextual_email_logs: Provide quick access to email logs for issue notes and messages
