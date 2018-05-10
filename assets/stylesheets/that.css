@@ -60,3 +60,6 @@ table.email-logs td.details {
     padding-right: 12px;
     color: #777;
 }
+.journal h4 .contextual {
+    margin-right: 10px;
+}
