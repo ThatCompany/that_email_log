@@ -1,4 +1,4 @@
-<% maillog = Maillog.where(:notifiable => @topic).first %>
+<% maillog = @topic ? Maillog.where(:notifiable => @topic).first : nil %>
 <% if maillog %>
   <%= javascript_tag do %>
     $('<a>', {

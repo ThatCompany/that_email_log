@@ -1,4 +1,4 @@
-<% maillog = Maillog.where(:notifiable => @issue).first %>
+<% maillog = @issue ? Maillog.where(:notifiable => @issue).first : nil %>
 <% if maillog %>
   <%= javascript_tag do %>
     $('<a>', {
@@ -24,7 +24,7 @@
   <% end %>
 <% end %>
 
-<% @journals = @comments if @journals.empty? && @comments.present? %>
+<% @journals = @comments if @journals.blank? && @comments.present? %>
 <% if @journals.present? %>
   <% maillogs = Maillog.where(:notifiable => @journals).to_a %>
   <% if maillogs.present? %>
