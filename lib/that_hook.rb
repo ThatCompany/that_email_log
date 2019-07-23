@@ -1,7 +1,8 @@
 class ThatHook  < Redmine::Hook::ViewListener
 
     def view_layouts_base_html_head(context = {})
-        stylesheet_link_tag('that', :plugin => 'that_email_log')
+        stylesheet_link_tag('that', :plugin => 'that_email_log') +
+        javascript_include_tag('that', :plugin => 'that_email_log')
     end
 
     def view_layouts_base_content(context = {})

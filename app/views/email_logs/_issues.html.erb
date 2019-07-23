@@ -29,54 +29,12 @@
   <% maillogs = Maillog.where(:notifiable => @journals).to_a %>
   <% if maillogs.present? %>
     <%= javascript_tag do %>
+      var logs_path = '<%= email_logs_path %>';
+      var link_label = '<%= escape_javascript(l(:label_email_log)) %>';
+      var options = { a_common_libs: <%= Redmine::Plugin.installed?(:a_common_libs) %> };
       $('<%= maillogs.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.join(', ') %>').each(function() {
-        var $this = $(this);
-        var journalId = $this.attr('id').substring(7);
-        var $contextual, $target;
-        var $details = $this.find('ul.details');
-        <% unless Redmine::Plugin.installed?(:a_common_libs) %>
-          if ($details.length > 0) {
-            $contextual = $target = $('<div>', { 'class': 'contextual' });
-            $details.before($contextual);
-          } else {
-            $contextual = $this.find('.contextual');
-            $target = $('#journal-' + journalId + '-notes');
-          }
-        <% else %>
-          $contextual = $this.find('.contextual');
-          if ($details.length > 0) {
-            if ($contextual.length == 0) {
-              $contextual = $target = $('<div>', { 'class': 'contextual' });
-              $contextual.appendTo($this.find('h4'));
-            }
-            $target = $details;
-          } else {
-            $target = $('#journal-' + journalId + '-notes');
-          }
-        <% end %>
-        if ($contextual.length > 0) {
-          $('<a>', {
-            title: '<%= escape_javascript(l(:label_email_log)) %>',
-            'class': 'icon-only icon-email-logs',
-            href: '<%= email_logs_path %>?q=redmine.journal-' + journalId + '.',
-            text: '<%= escape_javascript(l(:label_email_log)) %>',
-            click: function() {
-              var $emailLog = $('#journal-' + journalId + '-email-log');
-              if ($emailLog.length > 0) {
-                $emailLog.toggle();
-              } else {
-                $.ajax({
-                  url: '<%= email_logs_path %>/journal/' + journalId,
-                  success: function(data) {
-                    $target.before(data);
-                  }
-                });
-              }
-              return false;
-            }
-          }).appendTo($contextual.first()).before(' ');
-        }
-      })
+        addJournalEmailLogLink.call(this, link_label, logs_path, options);
+      });
     <% end %>
   <% end %>
 <% end %>

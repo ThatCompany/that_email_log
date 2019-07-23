@@ -1,0 +1,13 @@
+<%= render :file => File.join(Rails.root, 'plugins/redmine_issue_tabs/app/views/issues/rit_history.js.erb') %>
+
+<% if @journals.present? %>
+  <% maillogs = Maillog.where(:notifiable => @journals).to_a %>
+  <% if maillogs.present? %>
+    var logs_path = '<%= email_logs_path %>';
+    var link_label = '<%= escape_javascript(l(:label_email_log)) %>';
+    var options = { a_common_libs: <%= Redmine::Plugin.installed?(:a_common_libs) %> };
+    $('#tab-content-history').find('<%= maillogs.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.join(', ') %>').each(function() {
+      addJournalEmailLogLink.call(this, link_label, logs_path, options);
+    });
+  <% end %>
+<% end %>
