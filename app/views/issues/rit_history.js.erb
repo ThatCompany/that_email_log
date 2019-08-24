@@ -3,7 +3,7 @@
 <% if @journals.present? %>
   <% maillogs = Maillog.where(:notifiable => @journals).to_a %>
   <% if maillogs.present? %>
-    var logs_path = '<%= email_logs_path %>';
+    var logs_path = '<%= escape_javascript(raw(email_logs_path)) %>';
     var link_label = '<%= escape_javascript(l(:label_email_log)) %>';
     var options = { a_common_libs: <%= Redmine::Plugin.installed?(:a_common_libs) %> };
     $('#tab-content-history').find('<%= maillogs.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.join(', ') %>').each(function() {

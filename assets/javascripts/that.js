@@ -16,8 +16,13 @@ function addJournalEmailLogLink(label, path, options) {
         }
     } else {
         if ($details.length > 0) {
-            $contextual = $target = $('<div>', { 'class': 'contextual' });
-            $details.before($contextual);
+            $contextual = $this.children('div').children('.contextual');
+            if ($contextual.length > 0) {
+                $target = $contextual;
+            } else {
+                $contextual = $target = $('<div>', { 'class': 'contextual' });
+                $details.before($contextual);
+            }
         } else {
             $contextual = $this.find('.contextual');
             $target = $this.find('div.wiki').first();

@@ -2,9 +2,8 @@
 <% if maillog %>
   <%= javascript_tag do %>
     $('<a>', {
-      title: '<%= escape_javascript(l(:label_email_log)) %>',
       'class': 'icon icon-email-logs',
-      href: '<%= email_logs_path %>?q=redmine.issue-<%= @issue.id %>.',
+      href: '<%= escape_javascript(raw(email_logs_path(:q => "redmine.issue-#{@issue.id}."))) %>',
       text: '<%= escape_javascript(l(:label_email_log)) %>',
       click: function() {
         var $emailLog = $('#issue-<%= @issue.id %>-email-log');
@@ -12,7 +11,7 @@
           $emailLog.toggle();
         } else {
           $.ajax({
-            url: '<%= email_logs_path %>/issue/<%= @issue.id %>',
+            url: '<%= escape_javascript(raw(object_email_logs_path(:object_type => 'issue', :object_id => @issue.id))) %>',
             success: function(data) {
               $('#content > div.issue').before(data);
             }
@@ -29,7 +28,7 @@
   <% maillogs = Maillog.where(:notifiable => @journals).to_a %>
   <% if maillogs.present? %>
     <%= javascript_tag do %>
-      var logs_path = '<%= email_logs_path %>';
+      var logs_path = '<%= escape_javascript(raw(email_logs_path)) %>';
       var link_label = '<%= escape_javascript(l(:label_email_log)) %>';
       var options = { a_common_libs: <%= Redmine::Plugin.installed?(:a_common_libs) %> };
       $('<%= maillogs.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.join(', ') %>').each(function() {
