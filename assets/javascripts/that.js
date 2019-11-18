@@ -31,7 +31,7 @@ function addJournalEmailLogLink(label, path, options) {
     if ($contextual.length > 0) {
         $('<a>', {
             title: label,
-            'class': 'icon-only icon-email-logs',
+            'class': 'icon-only icon-email-log',
             href: path + '?q=redmine.journal-' + journalId + '.',
             text: label,
             click: function() {

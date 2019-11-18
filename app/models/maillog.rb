@@ -59,6 +59,10 @@ class Maillog < ActiveRecord::Base
         end
     end
 
+    def open!
+        update_attribute(:opened, true)
+    end
+
 private
 
     def set_default_date
@@ -88,7 +92,7 @@ private
         @address_fields.each do |field|
             field.maillog = self
             field.save
-        end
+        end if @address_fields
     end
 
 end

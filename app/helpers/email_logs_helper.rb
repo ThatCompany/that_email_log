@@ -36,7 +36,8 @@ module EmailLogsHelper
 
     def render_maillog_links(maillogs)
         maillogs.collect{ |maillog|
-            link_to(maillog.message_id, email_logs_path(:q => maillog.message_id), :class => 'email-log-link', :target => '_blank')
+            message_id = maillog.opened? ? content_tag('span', maillog.message_id, :class => 'icon icon-checkmark') : maillog.message_id
+            link_to(message_id, email_logs_path(:q => maillog.message_id), :class => 'email-log-link', :target => '_blank')
         }.join(',<br />').html_safe
     end
 

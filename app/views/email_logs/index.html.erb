@@ -30,7 +30,8 @@
           <%= content_tag('span', maillog.attachments,
                           :title => l(:label_x_attachments, :count => maillog.attachments), :class => 'icon icon-attachment') if maillog.attachments > 0 %>
           <%= link_to_function('', "$(this).closest('tr').toggleClass('collapsed'); $(this).closest('tr').next().toggle();",
-                               :title => l(:label_show_details), :class => 'icon-only email-details') %>
+                               :title => l(:label_show_details), :class => 'icon-only email-details')
+          %><span class="icon-only icon-email-log<%= ' opened' if maillog.opened? %>"></span>
           <%= render_subject(maillog) %>
         </td>
         <td class="recipients"><p><%= render_email_addresses(maillog.recipients) %></p></td>

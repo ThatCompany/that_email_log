@@ -1,10 +1,16 @@
-a.icon-email-logs {
+#admin-menu a.icon-email-logs {
+    background-image: url(../images/email-checked.png);
+}
+.icon-email-log {
     background-image: url(../images/email.png);
 }
-a.icon-only.icon-email-logs {
+.icon-email-log.opened {
+    background-image: url(../images/email-checked.png);
+}
+.icon-only.icon-email-log {
     background-position: 0 -1px;
 }
-div.message a.icon-only.icon-email-logs {
+div.message a.icon-only.icon-email-log {
     vertical-align: middle;
 }
 table.email-logs {
@@ -52,6 +58,10 @@ table.email-logs td.details {
     font-size: 90%;
     padding: 2px;
     color: #777;
+}
+.icon.icon-checkmark {
+    background-image: url(../images/checkmark.png);
+    padding-left: 10px;
 }
 .email-log .email-log-link {
     background-position: right -6px top -6px;

@@ -1,8 +1,8 @@
-<% maillog = @issue ? Maillog.where(:notifiable => @issue).first : nil %>
-<% if maillog %>
+<% maillogs = @issue ? Maillog.where(:notifiable => @issue).to_a : [] %>
+<% if maillogs.present? %>
   <%= javascript_tag do %>
     $('<a>', {
-      'class': 'icon icon-email-logs',
+      'class': 'icon icon-email-log<%= ' opened' if maillogs.any?{ |maillog| maillog.opened? } %>',
       href: '<%= escape_javascript(raw(email_logs_path(:q => "redmine.issue-#{@issue.id}."))) %>',
       text: '<%= escape_javascript(l(:label_email_log)) %>',
       click: function() {
@@ -31,8 +31,11 @@
       var logs_path = '<%= escape_javascript(raw(email_logs_path)) %>';
       var link_label = '<%= escape_javascript(l(:label_email_log)) %>';
       var options = { a_common_libs: <%= Redmine::Plugin.installed?(:a_common_libs) %> };
-      $('<%= maillogs.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.join(', ') %>').each(function() {
+      $('<%= maillogs.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.uniq.join(', ') %>').each(function() {
         addJournalEmailLogLink.call(this, link_label, logs_path, options);
+      });
+      $('<%= maillogs.select{ |maillog| maillog.opened? }.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.uniq.join(', ') %>').each(function() {
+        $(this).find('a.icon-only.icon-email-log').addClass('opened');
       });
     <% end %>
   <% end %>

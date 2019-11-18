@@ -5,3 +5,10 @@
     <%= l(:text_contextual_email_logs) %>
   </label>
 </p>
+<p>
+  <%= label_tag('settings[email_tracking_image]', l(:label_email_open_tracking)) %>
+  <label class="block">
+    <%= check_box_tag('settings[email_tracking_image]', '1', @settings['email_tracking_image']) %>
+    <%= l(:text_email_tracking_image).html_safe %>
+  </label>
+</p>

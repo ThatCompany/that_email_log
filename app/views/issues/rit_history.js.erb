@@ -6,8 +6,11 @@
     var logs_path = '<%= escape_javascript(raw(email_logs_path)) %>';
     var link_label = '<%= escape_javascript(l(:label_email_log)) %>';
     var options = { a_common_libs: <%= Redmine::Plugin.installed?(:a_common_libs) %> };
-    $('#tab-content-history').find('<%= maillogs.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.join(', ') %>').each(function() {
+    $('#tab-content-history').find('<%= maillogs.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.uniq.join(', ') %>').each(function() {
       addJournalEmailLogLink.call(this, link_label, logs_path, options);
+    });
+    $('#tab-content-history').find('<%= maillogs.select{ |maillog| maillog.opened? }.collect{ |maillog| "#change-#{maillog.notifiable.id}" }.uniq.join(', ') %>').each(function() {
+      $(this).find('a.icon-only.icon-email-log').addClass('opened');
     });
   <% end %>
 <% end %>

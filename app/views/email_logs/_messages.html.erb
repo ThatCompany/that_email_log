@@ -1,9 +1,9 @@
-<% maillog = @topic ? Maillog.where(:notifiable => @topic).first : nil %>
-<% if maillog %>
+<% maillogs = @topic ? Maillog.where(:notifiable => @topic).to_a : [] %>
+<% if maillogs.present? %>
   <%= javascript_tag do %>
     $('<a>', {
       title: '<%= escape_javascript(l(:label_email_log)) %>',
-      'class': 'icon icon-email-logs',
+      'class': 'icon icon-email-log<%= ' opened' if maillogs.any?{ |maillog| maillog.opened? } %>',
       href: '<%= escape_javascript(raw(email_logs_path(:q => "redmine.message-#{@topic.id}."))) %>',
       text: '<%= escape_javascript(l(:label_email_log)) %>',
       click: function() {
@@ -28,7 +28,7 @@
   <% maillogs = Maillog.where(:notifiable => @replies).to_a %>
   <% if maillogs.present? %>
     <%= javascript_tag do %>
-      $('<%= maillogs.collect{ |maillog| "#message-#{maillog.notifiable.id}" }.join(', ') %>').each(function() {
+      $('<%= maillogs.collect{ |maillog| "#message-#{maillog.notifiable.id}" }.uniq.join(', ') %>').each(function() {
         var $this = $(this);
         var $contextual = $this.find('.contextual');
         if ($contextual.length > 0) {
@@ -36,7 +36,7 @@
           var messageId = $this.attr('id').substring(8);
           $('<a>', {
             title: '<%= escape_javascript(l(:label_email_log)) %>',
-            'class': 'icon-only icon-email-logs',
+            'class': 'icon-only icon-email-log',
             href: '<%= escape_javascript(raw(email_logs_path)) %>?q=redmine.message-' + messageId + '.',
             text: '<%= escape_javascript(l(:label_email_log)) %>',
             click: function() {
@@ -55,6 +55,9 @@
             }
           }).appendTo($contextual.first()).before(' ');
         }
+      });
+      $('<%= maillogs.select{ |maillog| maillog.opened? }.collect{ |maillog| "#message-#{maillog.notifiable.id}" }.uniq.join(', ') %>').each(function() {
+        $(this).find('a.icon-only.icon-email-log').addClass('opened');
       });
     <% end %>
   <% end %>

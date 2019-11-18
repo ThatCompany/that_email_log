@@ -11,9 +11,11 @@ en:
   label_show_details: Show details
   label_email_logs_search_placeholder: Subject, Message ID or email address
   label_contextual_email_logs: Contextual email logs
+  label_email_open_tracking: Email open tracking
   label_sent_to: Sent to
   label_sent_at: Sent at
   label_x_attachments:
     one: 1 attachment
     other: "%{count} attachments"
   text_contextual_email_logs: Provide quick access to email logs for issue notes and messages
+  text_email_tracking_image: Use special tracking image in email body (must be configured, see <a href="https://github.com/ThatCompany/that_email_log#installation">here</a>)
