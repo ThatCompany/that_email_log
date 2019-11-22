@@ -59,8 +59,12 @@ class Maillog < ActiveRecord::Base
         end
     end
 
+    def opened?
+        opened_on.present?
+    end
+
     def open!
-        update_attribute(:opened, true)
+        update_attribute(:opened_on, Time.now)
     end
 
 private

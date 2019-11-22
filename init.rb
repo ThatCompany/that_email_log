@@ -9,6 +9,13 @@ Rails.configuration.to_prepare do
         Mailer.send(:helper, :email_tracker)
         Mailer.send(:include, EmailTrackerHelper)
     end
+
+    if Redmine::Plugin.installed?(:redmine_mentions)
+        unless MentionMailer.included_modules.include?(EmailTrackerHelper)
+            MentionMailer.send(:helper, :email_tracker)
+            MentionMailer.send(:include, EmailTrackerHelper)
+        end
+    end
 end
 
 Redmine::Plugin.register :that_email_log do

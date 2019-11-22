@@ -43,6 +43,9 @@
             <% maillog.addresses_by_fields.each do |field, addresses| %>
               <div class="field"><strong><%= l("label_field_#{field.downcase}") %>:</strong> <%= render_email_addresses(addresses, true) %></div>
             <% end %>
+            <% if maillog.opened? %>
+              <div class="field"><strong><%= l(:label_opened_at) %>:</strong> <%= format_time(maillog.opened_on) %></div>
+            <% end %>
           </div>
           <div class="field-group splitcontentright">
             <% if maillog.project %>

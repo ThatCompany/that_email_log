@@ -14,6 +14,7 @@ en:
   label_email_open_tracking: Email open tracking
   label_sent_to: Sent to
   label_sent_at: Sent at
+  label_opened_at: Opened at
   label_x_attachments:
     one: 1 attachment
     other: "%{count} attachments"
