@@ -7,7 +7,7 @@ class Maillog < ActiveRecord::Base
     validate :validate_recipients
 
     before_create :set_default_date
-    after_save :save_address_fields
+    after_create :save_address_fields
 
     scope :like, lambda { |q|
         unless q.blank?
@@ -74,6 +74,7 @@ private
     end
 
     def set_address_fields(field, emails)
+        raise 'Cannot add address field to existing email log.' unless new_record?
         @address_fields ||= []
         @address_fields += emails.collect do |email|
             begin
@@ -87,7 +88,7 @@ private
     end
 
     def validate_recipients
-        if @address_fields.select{ |address| address.field != MaillogAddressField::FIELD_FROM }.empty?
+        if !@address_fields || @address_fields.select{ |address| address.field != MaillogAddressField::FIELD_FROM }.empty?
             errors.add(:base, l(:label_field_to) + ' ' + l('activerecord.errors.messages.blank'))
         end
     end

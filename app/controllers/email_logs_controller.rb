@@ -37,9 +37,9 @@ private
     def load_addresses_map
         addresses = @maillogs.collect{ |maillog| maillog.addresses }.flatten.uniq
         map = EmailAddress.select(:user_id, :address)
-                          .where("LOWER(address) IN (?)", addresses.map{ |address| address.downcase})
+                          .where("LOWER(address) IN (?)", addresses.map{ |address| address.downcase })
                           .inject({}) do |hash, record|
-            hash[record.address] = record.user_id
+            hash[record.address.downcase] = record.user_id
             hash
         end
         users = User.active.where(:id => map.values.uniq).inject({}) do |hash, user|

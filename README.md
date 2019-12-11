@@ -10,11 +10,22 @@ If **Contextual email logs** are enabled in the plugin's settings (they are by d
 
 ![Issue page](issue.png)
 
+If **Email open tracking** is enabled in the plugin's settings and `mailer.html.erb` is modified accordingly (see below),
+the plugin adds a tiny transparent image to outgoing emails. This image lets track, if the email has been opened by the user
+(if users allowed to load images in their email clients).
+
 ## Installation
 
 - Move `that_email_log` directory to the `plugins` directory of Redmine
 - Run `rake redmine:plugins:migrate RAILS_ENV=production`
 - Restart Redmine
+
+If you want to enable email open tracking using the 1x1 pixel invisible image,
+you also need to do the following:
+
+- Copy `mailer.html.erb` from Redmine's `app/views/layouts/` to the same
+  directory in the plugin
+- Add `<%= that_email_tracker %>` somewhere in this file, e.g., before `</body>`
 
 ## License
 

@@ -5,6 +5,10 @@ require_dependency 'that_hook'
 Rails.logger.info 'Starting That Email Log plugin for Redmine'
 
 Rails.configuration.to_prepare do
+    unless Mailer.included_modules.include?(Patches::EmailTrackerMailerPatch)
+        Mailer.send(:include, Patches::EmailTrackerMailerPatch)
+    end
+
     unless Mailer.included_modules.include?(EmailTrackerHelper)
         Mailer.send(:helper, :email_tracker)
         Mailer.send(:include, EmailTrackerHelper)

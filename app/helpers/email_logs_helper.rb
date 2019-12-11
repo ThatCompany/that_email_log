@@ -2,8 +2,9 @@ module EmailLogsHelper
 
     def render_email_addresses(addresses, with_emails = false)
         addresses.collect{ |address|
-            if @user_addresses_map[address]
-                user_link = link_to_user(@user_addresses_map[address])
+            address_key = address.downcase
+            if @user_addresses_map[address_key]
+                user_link = link_to_user(@user_addresses_map[address_key])
                 with_emails ? content_tag('span', "#{user_link} &lt;#{address}&gt;".html_safe, :class => 'address') : user_link
             else
                 content_tag('span', address, :class => 'address')
