@@ -1,4 +1,4 @@
-class CreateMaillogAddressFields < ActiveRecord::Migration
+class CreateMaillogAddressFields < Rails::VERSION::MAJOR < 5 ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
 
     def self.up
         create_table :maillog_address_fields do |t|

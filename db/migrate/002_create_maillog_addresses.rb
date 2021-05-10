@@ -1,4 +1,4 @@
-class CreateMaillogAddresses < ActiveRecord::Migration
+class CreateMaillogAddresses < Rails::VERSION::MAJOR < 5 ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
 
     def self.up
         create_table :maillog_addresses do |t|

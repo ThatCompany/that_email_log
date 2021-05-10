@@ -2,8 +2,8 @@ class EmailLogsController < ApplicationController
     layout 'admin'
     self.main_menu = false if self.respond_to?(:main_menu)
 
-    before_filter :require_admin
-    before_filter :find_notifiable, :only => :show
+    before_action :require_admin
+    before_action :find_notifiable, :only => :show
 
     def index
         scope = Maillog.all

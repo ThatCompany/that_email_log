@@ -17,10 +17,11 @@ table.email-logs {
     margin-top: 1.2em;
 }
 table.email-logs tr.collapsible .icon-only.email-details {
-    background-image: url(../../../images/arrow_expanded.png);
+    background-image: url(../../../images/arrow_down.png);
+    background-position: center;
 }
 table.email-logs tr.collapsible.collapsed .icon-only.email-details {
-    background-image: url(../../../images/arrow_collapsed.png);
+    background-image: url(../../../images/arrow_right.png);
 }
 table.email-logs td {
     vertical-align: top;

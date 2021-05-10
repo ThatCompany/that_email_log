@@ -14,7 +14,7 @@ class Maillog < ActiveRecord::Base
             pattern = "%#{q.strip.downcase}%"
             joins(:address_fields => :address).
             where("LOWER(#{table_name}.subject) LIKE :q OR LOWER(#{table_name}.message_id) LIKE :q OR LOWER(#{MaillogAddress.table_name}.address) LIKE :q", :q => pattern).
-            uniq
+            distinct
         else
             where(nil)
         end

@@ -1,4 +1,4 @@
-class AddMaillogsOpened < ActiveRecord::Migration
+class AddMaillogsOpened < Rails::VERSION::MAJOR < 5 ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
 
     def self.up
     end
