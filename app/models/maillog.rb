@@ -59,6 +59,10 @@ class Maillog < ActiveRecord::Base
         end
     end
 
+    def <=>(maillog)
+        date <=> maillog.date
+    end
+
     def opened?
         opened_on.present?
     end

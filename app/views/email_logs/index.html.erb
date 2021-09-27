@@ -39,22 +39,24 @@
       </tr>
       <tr class="<%= current_cycle %>" style="display: none;">
         <td colspan="3" class="details">
-          <div class="field-group splitcontentleft">
-            <% maillog.addresses_by_fields.each do |field, addresses| %>
-              <div class="field"><strong><%= l("label_field_#{field.downcase}") %>:</strong> <%= render_email_addresses(addresses, true) %></div>
-            <% end %>
-            <% if maillog.opened? %>
-              <div class="field"><strong><%= l(:label_opened_at) %>:</strong> <%= format_time(maillog.opened_on) %></div>
-            <% end %>
-          </div>
-          <div class="field-group splitcontentright">
-            <% if maillog.project %>
-              <div class="field"><strong><%= l(:label_project) %>:</strong> <%= link_to_project(maillog.project) %></div>
-            <% end %>
-            <% if maillog.notifiable_type.present? %>
-              <div class="field"><strong><%= l(:label_field_notifiable) %>:</strong> <%= render_notifiable(maillog) %></div>
-            <% end %>
-            <div class="field"><strong><%= l(:label_field_message_id) %>:</strong> <%= maillog.message_id %></div>
+          <div class="splitcontent">
+            <div class="field-group splitcontentleft">
+              <% maillog.addresses_by_fields.each do |field, addresses| %>
+                <div class="field"><strong><%= l("label_field_#{field.downcase}") %>:</strong> <%= render_email_addresses(addresses, true) %></div>
+              <% end %>
+              <% if maillog.opened? %>
+                <div class="field"><strong><%= l(:label_opened_at) %>:</strong> <%= format_time(maillog.opened_on) %></div>
+              <% end %>
+            </div>
+            <div class="field-group splitcontentright">
+              <% if maillog.project %>
+                <div class="field"><strong><%= l(:label_project) %>:</strong> <%= link_to_project(maillog.project) %></div>
+              <% end %>
+              <% if maillog.notifiable_type.present? %>
+                <div class="field"><strong><%= l(:label_field_notifiable) %>:</strong> <%= render_notifiable(maillog) %></div>
+              <% end %>
+              <div class="field"><strong><%= l(:label_field_message_id) %>:</strong> <%= maillog.message_id %></div>
+            </div>
           </div>
         </td>
       </tr>

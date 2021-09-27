@@ -5,8 +5,8 @@ class EmailTrackerController < ApplicationController
     skip_before_action :check_if_login_required, :check_password_change
 
     def index
-        if params[:message_id].present? && (maillog = Maillog.find_by_message_id(params[:message_id]))
-            maillog.open! unless maillog.opened?
+        if params[:message_id].present? && (maillogs = Maillog.where(:message_id => params[:message_id]).to_a).any?
+            maillogs.reject(&:opened?).each(&:open!)
         end
         send_file @image_path, :type => 'image/png', :disposition => 'inline'
     end

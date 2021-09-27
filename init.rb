@@ -28,7 +28,7 @@ Redmine::Plugin.register :that_email_log do
     author_url 'http://www.andriylesyuk.com/'
     description 'Enables logging of all outgoing email messages that are sent by Redmine.'
     url 'https://github.com/thatcompany/that_email_log'
-    version '0.0.3'
+    version '0.0.4'
 
     menu :admin_menu, :email_logs, :email_logs_path, :html => { :class => 'icon icon-email-logs' }, :before => :info
 
