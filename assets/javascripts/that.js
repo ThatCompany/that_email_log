@@ -33,13 +33,18 @@ function addJournalEmailLogLink(label, path, options) {
     if ($journalActions.length > 0) {
         $contextual = $journalActions;
     }
+    var $drdnItems = $contextual.find('.drdn .drdn-items');
+    if ($drdnItems.length > 0) {
+        $contextual = $drdnItems;
+    }
     if ($contextual.length > 0) {
         $('<a>', {
             title: label,
-            'class': 'icon-only icon-email-log',
+            'class': 'icon' + ($contextual.hasClass('drdn-items') ? '' : '-only') + ' icon-email-log',
             href: path + '?q=redmine.journal-' + journalId + '.',
             text: label,
             click: function() {
+                $(this).closest('.drdn').removeClass('expanded');
                 var $emailLog = $this.find('div.email-log');
                 if ($emailLog.length > 0) {
                     $emailLog.toggle();

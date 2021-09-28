@@ -1,11 +1,17 @@
 <% maillogs = @issue ? Maillog.where(:notifiable => @issue).to_a : [] %>
 <% if maillogs.present? %>
   <%= javascript_tag do %>
+    var $contextual = $('#content > .contextual').first();
+    var $target = $contextual.find('.drdn .drdn-items');
+    if ($target.length == 0) {
+        $target = $contextual;
+    }
     $('<a>', {
       'class': 'icon icon-email-log<%= ' opened' if maillogs.any?{ |maillog| maillog.opened? } %>',
       href: '<%= escape_javascript(raw(email_logs_path(:q => "redmine.issue-#{@issue.id}."))) %>',
       text: '<%= escape_javascript(l(:label_email_log)) %>',
       click: function() {
+        $(this).closest('.drdn').removeClass('expanded');
         var $emailLog = $('#issue-<%= @issue.id %>-email-log');
         if ($emailLog.length > 0) {
           $emailLog.toggle();
@@ -19,7 +25,7 @@
         }
         return false;
       }
-    }).appendTo($('#content > .contextual').first());
+    }).appendTo($target);
   <% end %>
 <% end %>
 
