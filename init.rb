@@ -1,6 +1,8 @@
 require 'redmine'
 
-require_dependency 'that_hook'
+Rails.configuration.to_prepare do
+  require_dependency 'that_hook'
+end
 
 Rails.logger.info 'Starting That Email Log plugin for Redmine'
 
